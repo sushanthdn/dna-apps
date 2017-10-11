@@ -14,6 +14,7 @@
 #
 # See https://wiki.dnanexus.com/Developer-Portal for tutorials on how
 # to modify this file.
+set -e -x -o pipefail
 
 main() {
 
