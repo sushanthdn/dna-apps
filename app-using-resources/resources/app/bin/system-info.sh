@@ -29,4 +29,14 @@ echo
 #Disk space usage using df command
 echo "Disk Space Utilization:"
 df -mh
-echo 
+echo
+
+#Disk space usage using df command
+echo "Disk Space Utilization:"
+df -mh
+echo
+
+#Environment variable
+echo "Environment"
+env
+echo
