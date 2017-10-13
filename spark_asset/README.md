@@ -1,11 +1,11 @@
-#DNANexus Spark Application Asset
+# DNANexus Spark Application Asset
 This asset installs the following
 * Java 8
 * Spark 2.2.0
 
 Refer this[link](https://wiki.dnanexus.com/Developer-Tutorials/Asset-Build-Process)to understand how to build asset.
 
-#How to build spark asset ?
+# How to build spark asset ?
 Execute dx build_asset command to build the spark asset.
 ```bash
 $ dx build_asset spark_asset
@@ -17,7 +17,7 @@ sreddy@sreddy-mv-ltmp-x.local:~/dev/spark$ dx ls
 spark_asset
 testapp1
 ```
-#How do I include this asset in my app?
+# How do I include this asset in my app?
 1.  In order to include it in your app you need to first build this asset (see above) so that its part of your product. 
 2.  Find the resource id of the asset. Use dx describe to get this information.
 ```bash
