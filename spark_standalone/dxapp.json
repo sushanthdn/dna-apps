@@ -11,13 +11,21 @@
       "class": "file",
       "optional": false,
       "patterns": [
-        "*"
+        "*.jar"
       ],
       "help": ""
     },
     {
-      "name": "app_input",
-      "label": "Spark Application Input",
+      "name": "class",
+      "label": "The entry point for your application",
+      "class": "string",
+      "optional": false,
+      "default" : "org.apache.spark.examples.SparkPi",
+      "help": "(e.g. org.apache.spark.examples.SparkPi)"
+    },
+    {
+      "name": "app_args",
+      "label": "Arguments passed to the main method of your main class, if any",
       "class": "string",
       "optional": true,
       "help": ""
@@ -28,6 +36,7 @@
       "class": "int",
       "optional": true,
       "default": 1,
+      "choices": [1, 2, 3, 4],
       "help": ""
     }
   ],

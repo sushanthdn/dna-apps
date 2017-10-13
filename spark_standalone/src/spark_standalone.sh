@@ -19,8 +19,9 @@ set -e -x -o pipefail
 main() {
 
     echo "Value of application: '$application'"
-    echo "Value of app_input: '$app_input'"
+    echo "Value of app_input: '$app_args'"
     echo "Value of executors: '$executors'"
+    echo "Value of class: '$class'"
 
     # The following line(s) use the dx command-line tool to download your file
     # inputs to the local file system using variable names for the filenames. To
@@ -28,7 +29,7 @@ main() {
     # "$variable" --name".
 
     # Download the file as application in the home directory
-    dx download "$application" -o application
+    dx download "$application" -o application.jar
 
     echo "Starting Apache Spark in Standalone Mode"
     export SPARK_HOME=/apps/spark
@@ -36,12 +37,23 @@ main() {
     export SPARK_MASTER_PORT=7077
     export SPARK_MASTER_URL=spark://$SPARK_MASTER_IP:$SPARK_MASTER_PORT
     export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64/jre
+    export SPARK_WORKER_INSTANCES=$executors
 
     $SPARK_HOME/sbin/start-master.sh -h $SPARK_MASTER_IP -p $SPARK_MASTER_PORT
     $SPARK_HOME/sbin/start-slave.sh $SPARK_MASTER_URL
 
-    $SPARK_HOME/bin/spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master $SPARK_MASTER_URL /home/dnanexus/application  10
+    # Checking status of the cluster (https://jaceklaskowski.gitbooks.io/mastering-apache-spark/spark-standalone-status.html)
+    jps -lm | grep -i spark
+    ls /tmp/spark-*.pid
 
+    #$SPARK_HOME/bin/spark-submit --class org.apache.spark.examples.SparkPi --deploy-mode client --master $SPARK_MASTER_URL /home/dnanexus/application  10
+    $SPARK_HOME/bin/spark-submit --class $class \
+    --deploy-mode cluster \
+    --num-executors $executors \
+    --executor-cores 1 \
+    --executor-memory 1g \
+    --master $SPARK_MASTER_URL \
+    /home/dnanexus/application.jar $app_args
 
     # Fill in your application code here.
     #
