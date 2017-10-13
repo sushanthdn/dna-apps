@@ -8,7 +8,7 @@ This application depends on asset [spark_asset](https://github.com/sushanthdn/dn
 
 # How to build this application 
 1. First you need to [build](https://github.com/sushanthdn/dna-apps/tree/master/spark_asset) spark_asset 
-2. Get the resource id and add it as assetDepends in dxapp.json file (replace the following id under assetDepends with resource id from your project)
+2. Get the record id and add it as assetDepends in dxapp.json file (replace the following id under assetDepends with resource id from your project)
 ```json
     "assetDepends": [
       {
