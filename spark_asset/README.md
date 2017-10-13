@@ -19,7 +19,7 @@ testapp1
 ```
 # How do I include this asset in my app?
 1.  In order to include it in your app you need to first build this asset (see above) so that its part of your product. 
-2.  Find the resource id of the asset. Use dx describe to get this information.
+2.  Find the record id of the asset. Use dx describe to get this information.
 ```bash
 sreddy@sreddy-mv-ltmp-x.local:~/dev/spark$ dx describe spark_asset
 Result 1:
