@@ -8,7 +8,7 @@ This application depends on asset [spark_asset](https://github.com/sushanthdn/dn
 
 # How to build this application 
 1. First you need to [build](https://github.com/sushanthdn/dna-apps/tree/master/spark_asset) spark_asset 
-2. Get the record id and add it as assetDepends in dxapp.json file (replace the following id under assetDepends with resource id from your project)
+2. Get the record id and add it as assetDepends in dxapp.json file (replace the following id under assetDepends with record id from your project)
 ```json
     "assetDepends": [
       {
@@ -24,6 +24,7 @@ This application depends on asset [spark_asset](https://github.com/sushanthdn/dn
    * No of executors
 
 ## Example Usage : 
+spark-examples_2.11-2.2.0.jar is uploaded to SparkExample folder in the project
 ```bash
 sreddy@sreddy-mv-ltmp-x.local:~/dev$ dx run spark_standalone -iapplication=SparkExample/spark-examples_2.11-2.2.0.jar -iexecutors=2 -iapp_args=1 -iclass=org.apache.spark.examples.SparkPi  -y
 
