@@ -4,7 +4,7 @@
 spark_standalone is a DNA platform application which allows you to run your spark application on dna platform.
 This application brings up a spark standalone cluster and runs your spark application.
 
-This application depends on asset spark_asset [line](https://github.com/sushanthdn/dna-apps/tree/master/spark_asset).
+This application depends on asset [spark_asset](https://github.com/sushanthdn/dna-apps/tree/master/spark_asset).
 
 # How to build this application 
 1. First you need to [build](https://github.com/sushanthdn/dna-apps/tree/master/spark_asset) spark_asset 
