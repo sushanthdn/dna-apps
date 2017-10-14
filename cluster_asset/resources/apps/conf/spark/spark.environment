@@ -1,0 +1,4 @@
+export SPARK_HOME=/apps/spark
+export SPARK_MASTER_IP=localhost
+export SPARK_MASTER_PORT=7077
+export SPARK_MASTER_URL=spark://$SPARK_MASTER_IP:$SPARK_MASTER_PORT
