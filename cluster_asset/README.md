@@ -5,7 +5,7 @@ This asset installs the following
 * Spark 2.2.0
 * Hive 2.3.0
 
-Refer this[link](https://wiki.dnanexus.com/Developer-Tutorials/Asset-Build-Process)to understand how to build asset.
+Refer this [link](https://wiki.dnanexus.com/Developer-Tutorials/Asset-Build-Process) to understand how to build asset.
 
 # How to build spark asset ?
 Execute dx build_asset command to build the spark asset.
@@ -55,13 +55,15 @@ Size                68
       }
     ]
 ```
-4. Run the following scripts in your app/workstation 
-```
-def _initiate_setup():
-    cmd = '/apps/conf/hadoop/setup.sh'
-    _run_cmd(cmd)
-    cmd = '/apps/conf/hive/setup.sh'
-    _run_cmd(cmd)
-    cmd = '/apps/conf/spark/setup.sh'
-    _run_cmd(cmd)
+4. In your app, you can set the appropriate environment and setup. For example, if you want to start hadoop single node cluster run the following
+```bash
+
+# Start the namenode and resource manager
+$ /apps/resources/hadoop/setup/setup-singlenode.sh
+
+# Set the hadoop environment
+$ source /apps/resource/hadoop/hadoop.environment 
+
+# To run a sample spark application
+$ /apps/spark/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode cluster /apps/spark/examples/jars/spark-examples_2.11-2.2.0.jar 10
 ```
