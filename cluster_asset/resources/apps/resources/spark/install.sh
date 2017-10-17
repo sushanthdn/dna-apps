@@ -11,4 +11,4 @@ sudo mv /apps/spark-2.2.0-bin-hadoop2.7 /apps/spark
 rm -rf downloads/spark-2.2.0-bin-hadoop2.7.tgz
 
 echo "Setting spark environment"
-source /apps/conf/spark/spark.environment
+source /apps/resources/spark/spark.environment

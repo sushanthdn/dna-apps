@@ -11,5 +11,5 @@ sudo mv /apps/apache-hive-2.3.0-bin /apps/hive
 rm -rf downloads/apache-hive-2.3.0-bin.tar.gz
 
 echo "Setting hive environment"
-source /apps/conf/hive/hive.environment
+source /apps/resources/hive/hive.environment
 

@@ -11,10 +11,14 @@ sudo mv /apps/hadoop-2.8.1 /apps/hadoop
 rm -rf downloads/hadoop-2.8.1.tar.gz
 
 echo "Setting hadoop environment"
-source /apps/conf/hadoop/hadoop.environment
+source /apps/resources/hadoop/hadoop.environment
 
 # Copy hadoop config files to hadoop config folder
-sudo cp /apps/conf/hadoop/core-site.xml $HADOOP_CONF_DIR/
-sudo cp /apps/conf/hadoop/hdfs-site.xml $HADOOP_CONF_DIR/
-sudo cp /apps/conf/hadoop/mapred-site.xml /$HADOOP_CONF_DIR/
-sudo cp /apps/conf/hadoop/hadoop-env.sh /$HADOOP_CONF_DIR/
+sudo cp /apps/resources/hadoop/custom/core-site.xml $HADOOP_CONF_DIR/
+sudo cp /apps/resources/hadoop/custom/hdfs-site.xml $HADOOP_CONF_DIR/
+sudo cp /apps/resources/hadoop/custom/mapred-site.xml /$HADOOP_CONF_DIR/
+sudo cp /apps/resources/hadoop/custom/hadoop-env.sh /$HADOOP_CONF_DIR/
+
+# Create hadoop log folder
+sudo mkdir -p $HADOOP_LOG_DIR
+sudo chmod -R 766 $HADOOP_LOG_DIR
