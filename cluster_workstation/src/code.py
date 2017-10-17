@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# cloud_workstation 1.0.0
+# cluster_workstation 1.0.0
 
 import os
 import re
