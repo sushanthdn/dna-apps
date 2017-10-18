@@ -5,9 +5,10 @@ Cluster work station application lets you run a workstation with cluster_asset a
 Refer this [link](https://wiki.dnanexus.com/Developer-Tutorials/Asset-Build-Process) to understand how to build asset.
 
 # How to build cluster asset ?
+Refer : [link](https://github.com/sushanthdn/dna-apps/tree/master/cluster_asset)
 Execute dx build_asset command to build the cluster asset.
 ```bash
-$ dx build_asset cluster_asset
+$ dx build_asset cluster_asset 
 ```
 This command will run a job which will create an asset with java, hadoop, spark and hive apps installed in /apps/ folder in lxc.
 The command uses configuration files under /apps/resources.
