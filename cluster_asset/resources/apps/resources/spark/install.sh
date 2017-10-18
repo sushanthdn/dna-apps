@@ -12,3 +12,8 @@ rm -rf downloads/spark-2.2.0-bin-hadoop2.7.tgz
 
 echo "Setting spark environment"
 source /apps/resources/spark/spark.environment
+
+# Create spark log folder
+sudo mkdir -p $SPARK_LOG_DIR
+# Create spark work folder
+sudo mkdir -p $SPARK_WORK_DIR
