@@ -55,15 +55,34 @@ Size                68
       }
     ]
 ```
-4. In your app, you can set the appropriate environment and setup. For example, if you want to start hadoop single node cluster run the following
+
+## To use cluster_asset to start single hadoop node cluster 
+Add the following in your application code 
 ```bash
 
 # Start the namenode and resource manager
-$ /apps/resources/hadoop/setup/setup-singlenode.sh
+/apps/resources/hadoop/setup/setup-singlenode.sh
 
 # Set the hadoop environment
-$ source /apps/resource/hadoop/hadoop.environment 
+source /apps/resource/hadoop/hadoop.environment 
 
 # To run a sample spark application
-$ /apps/spark/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode cluster /apps/spark/examples/jars/spark-examples_2.11-2.2.0.jar 10
+/apps/spark/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode cluster /apps/spark/examples/jars/spark-examples_2.11-2.2.0.jar 10
+```
+
+## To use cluster_asset to start spark standalone cluster with multiple workers in same node.
+```bash
+# Starting Apache Spark in Standalone Mode
+export SPARK_WORKER_INSTANCES=$workers
+
+# Initialize spark environment
+source /apps/resources/spark/spark.environment
+/apps/resources/spark/setup/setup-standalone.sh
+
+# Submit spark job
+$SPARK_HOME/bin/spark-submit --class $class \
+--executor-cores $cores \
+--executor-memory $executor_memory \
+--master $SPARK_MASTER_URL \
+/home/dnanexus/application.jar $app_args
 ```
