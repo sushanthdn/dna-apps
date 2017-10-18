@@ -53,7 +53,7 @@ Size                68
     ]
 ```
 
-## To start start cluster_workstation app
+## To start cluster_workstation app
 * Build the app using dx build 
 * Run the app using the command 
 ```bash
@@ -62,17 +62,6 @@ dx run cluster_workstation --ssh
 * If the work station is already running, you can ssh to it by 
 ```bash
 dx ssh <job_id>
-```
-##### To stop the cluster
-```bash
-/apps/hadoop/sbin/stop-dfs.sh
-/apps/hadoop/sbin/stop-yarn.sh
-```
-##### To start the cluster again 
-```bash
-/apps/hadoop/sbin/start-dfs.sh
-/apps/hadoop/sbin/start-yarn.sh
-jps
 ```
 4. You can use the following to start spark standalone cluster with multiple workers in same node.
 ```bash
