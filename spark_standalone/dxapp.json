@@ -3,7 +3,7 @@
   "title": "Apache Spark Standalone Cluster",
   "summary": "Application that will spawn apache spark cluster and allow you to run spark application",
   "dxapi": "1.0.0",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "inputSpec": [
     {
       "name": "application",
@@ -20,23 +20,61 @@
       "label": "The entry point for your application",
       "class": "string",
       "optional": false,
-      "default" : "org.apache.spark.examples.SparkPi",
+      "default": "org.apache.spark.examples.SparkPi",
       "help": "(e.g. org.apache.spark.examples.SparkPi)"
+    },
+    {
+      "name": "in_files",
+      "label": "Input files",
+      "class": "array:file",
+      "patterns": [
+        "*"
+      ],
+      "optional": true
     },
     {
       "name": "app_args",
       "label": "Arguments passed to the main method of your main class, if any",
       "class": "string",
+      "default": "10",
       "optional": true,
       "help": ""
     },
     {
-      "name": "executors",
-      "label": "Number of Executors",
+      "name": "workers",
+      "label": "Number of workers",
       "class": "int",
       "optional": true,
       "default": 1,
-      "choices": [1, 2, 3, 4],
+      "choices": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "help": ""
+    },
+    {
+      "name": "executor_memory",
+      "label": "Executor Memory",
+      "class": "string",
+      "optional": true,
+      "default": "1g",
+      "choices": [
+        "1g",
+        "2g"
+      ],
+      "help": ""
+    },
+    {
+      "name": "cores",
+      "label": "Executor cores",
+      "class": "int",
+      "optional": true,
+      "default": 1,
+      "choices": [
+        1
+      ],
       "help": ""
     }
   ],
@@ -56,7 +94,7 @@
     },
     "assetDepends": [
       {
-        "id": "record-F7P8vf80K0g6X90G92yG4pB1"
+        "id": "record-F7Y7Jf007zzz3fb89Vx4PvV2"
       }
     ],
     "distribution": "Ubuntu",
