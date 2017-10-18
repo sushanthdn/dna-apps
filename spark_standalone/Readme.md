@@ -21,7 +21,9 @@ This application depends on asset [cluster_asset](https://github.com/sushanthdn/
    * Application file such as spark-examples_2.11-2.2.0.jar from platform. You need to upload your file to your project.
    * Class file that will initiate the spark program org.apache.spark.examples.SparkPi
    * Arguments passed to the main method of your main class, if any. 
-   * No of executors
+   * Executor memory
+   * Executor cores
+   * No of workers
 
 ## Example Usage : 
 spark-examples_2.11-2.2.0.jar is uploaded to SparkExample folder in the project
