@@ -7,8 +7,8 @@ This asset installs the following
 
 Refer this [link](https://wiki.dnanexus.com/Developer-Tutorials/Asset-Build-Process) to understand how to build asset.
 
-# How to build spark asset ?
-Execute dx build_asset command to build the spark asset.
+# How to build cluster asset ?
+Execute dx build_asset command to build the cluster asset.
 ```bash
 $ dx build_asset cluster_asset
 ```
