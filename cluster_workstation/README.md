@@ -1,9 +1,6 @@
-# DNANexus Cluster Application Asset
-This asset installs the following
-* Java 8
-* Hadoop 2.8.1
-* Spark 2.2.0
-* Hive 2.3.0
+# DNANexus Cluster Work Station Application
+
+Cluster work station application lets you run a workstation with cluster_asset attached. This will give you access to hadoop, spark and hive installed on the machine.
 
 Refer this [link](https://wiki.dnanexus.com/Developer-Tutorials/Asset-Build-Process) to understand how to build asset.
 
@@ -56,21 +53,28 @@ Size                68
     ]
 ```
 
-## To use cluster_asset to start single hadoop node cluster 
-Add the following in your application code 
+## To start start cluster_workstation app
+* Build the app using dx build 
+* Run the app using the command 
 ```bash
-
-# Start the namenode and resource manager
-/apps/resources/hadoop/setup/setup-singlenode.sh
-
-# Set the hadoop environment
-source /apps/resources/hadoop/hadoop.environment 
-
-# To run a sample spark application
-/apps/spark/bin/spark-submit --class org.apache.spark.examples.SparkPi --master yarn --deploy-mode cluster /apps/spark/examples/jars/spark-examples_2.11-2.2.0.jar 10
+dx run cluster_workstation --ssh 
 ```
-
-## To use cluster_asset to start spark standalone cluster with multiple workers in same node.
+* If the work station is already running, you can ssh to it by 
+```bash
+dx ssh <job_id>
+```
+##### To stop the cluster
+```bash
+/apps/hadoop/sbin/stop-dfs.sh
+/apps/hadoop/sbin/stop-yarn.sh
+```
+##### To start the cluster again 
+```bash
+/apps/hadoop/sbin/start-dfs.sh
+/apps/hadoop/sbin/start-yarn.sh
+jps
+```
+4. You can use the following to start spark standalone cluster with multiple workers in same node.
 ```bash
 # Starting Apache Spark in Standalone Mode
 export SPARK_WORKER_INSTANCES=$workers
@@ -85,4 +89,21 @@ $SPARK_HOME/bin/spark-submit --class $class \
 --executor-memory $executor_memory \
 --master $SPARK_MASTER_URL \
 /home/dnanexus/application.jar $app_args
+```
+##### To stop the worker and master 
+```bash
+$SPARK_HOME/sbin/stop-slave.sh
+$SPARK_HOME/sbin/start-master.sh
+```
+##### To start the worker and master again
+```bash
+echo "Starting Spark master"
+$SPARK_HOME/sbin/start-master.sh -h $SPARK_MASTER_IP -p $SPARK_MASTER_PORT
+
+# If no of slaves not set, default it to 2
+NO_OF_SLAVES=${SPARK_WORKER_INSTANCES:-2}
+export SPARK_WORKER_INSTANCES=$NO_OF_SLAVES
+
+echo "Starting Spark Slaves"
+$SPARK_HOME/sbin/start-slave.sh $SPARK_MASTER_URL
 ```
