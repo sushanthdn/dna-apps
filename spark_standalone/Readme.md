@@ -24,6 +24,8 @@ This application depends on asset [cluster_asset](https://github.com/sushanthdn/
    * Executor memory
    * Executor cores
    * No of workers
+   * Set of input files which will be copied to /home/dnanexus/in/in_files/<index>/<filename> in lxc
+   * If you want to copy the output files to your project, then you need to make sure the files are present in /home/dnanexus/out/out_files folder lxc
 
 ## Example Usage : 
 1. Running SparkPi example spark application
@@ -44,8 +46,7 @@ Using input JSON:
     }
 }
 ```
-2. Running csv2Parquet example spark application
-Copy examples/csv2Parquet to you project under SparkExample folder. 
+2. Running csv2Parquet example spark application. Copy examples/csv2Parquet to you project under SparkExample folder. 
 Note that the app_args specifies the following 
 * Sample patients csv file. The in_files are uploaded by app into /in/in_files/ folder. 
 * Output file should be generated under out/output_files/ folder. At the end of the application run, all files under /out/output_files will be copied to your project.
@@ -73,6 +74,6 @@ Using input JSON:
     ]
 }
 ```
-Running the above command should generate patients.parquet folder in your application.
+Running the above command should generate patients.parquet folder in your project.
 # Note 
 * You can use this app as template to create more complex projects.
