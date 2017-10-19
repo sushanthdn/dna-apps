@@ -51,6 +51,9 @@ main() {
     # reported in the job_error.json file, then the failure reason
     # will be AppInternalError with a generic error message.
 
+    # Copy the log files
+    sudo tar -cvzf out/output_files/$DX_JOB_ID-spark-logs.tar.gz $SPARK_LOG_DIR
+
     # Upload outputs
     dx-upload-all-outputs --parallel
 
