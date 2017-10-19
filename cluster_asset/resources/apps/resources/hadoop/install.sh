@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 set -e -x -o pipefail
 # Download hadoop tarball
-wget http://apache.claz.org/hadoop/common/hadoop-2.8.1/hadoop-2.8.1.tar.gz -P downloads/
+wget http://apache.claz.org/hadoop/common/hadoop-2.7.4/hadoop-2.7.4.tar.gz -P downloads/
 
 # Extracting the tarball to /apps/hadoop folder
-sudo tar -xvzf downloads/hadoop-2.8.1.tar.gz -C /apps
-sudo mv /apps/hadoop-2.8.1 /apps/hadoop
+sudo tar -xvzf downloads/hadoop-2.7.4.tar.gz -C /apps
+sudo mv /apps/hadoop-2.7.4 /apps/hadoop
 
 # Cleanup the downloaded file
-rm -rf downloads/hadoop-2.8.1.tar.gz
+rm -rf downloads/hadoop-2.7.4.tar.gz
 
 echo "Setting hadoop environment"
 source /apps/resources/hadoop/hadoop.environment

@@ -1,7 +1,7 @@
 # DNANexus Cluster Application Asset
 This asset installs the following
 * Java 8
-* Hadoop 2.8.1
+* Hadoop 2.7.4
 * Spark 2.2.0
 * Hive 2.3.0
 
