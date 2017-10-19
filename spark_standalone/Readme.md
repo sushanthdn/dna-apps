@@ -26,6 +26,7 @@ This application depends on asset [cluster_asset](https://github.com/sushanthdn/
    * No of workers
 
 ## Example Usage : 
+1. Running SparkPi example spark application
 spark-examples_2.11-2.2.0.jar is uploaded to SparkExample folder in the project
 ```bash
 sreddy@sreddy-mv-ltmp-x.local:/tmp$ dx run spark_standalone -iapplication=SparkExample/spark-examples_2.11-2.2.0.jar -iworkers=2 -iapp_args=10 -iclass=org.apache.spark.examples.SparkPi  -y
@@ -43,6 +44,35 @@ Using input JSON:
     }
 }
 ```
+2. Running csv2Parquet example spark application
+Copy examples/csv2Parquet to you project under SparkExample folder. 
+Note that the app_args specifies the following 
+* Sample patients csv file. The in_files are uploaded by app into /in/in_files/ folder. 
+* Output file should be generated under out/output_files/ folder. At the end of the application run, all files under /out/output_files will be copied to your project.
+```bash
+sreddy@sreddy-mv-ltmp-x.local:~/IdeaProjects/dna-apps/spark_standalone/examples$ dx run spark_standalone  -iclass="com.dnanexus.spark.PhenoCsvToParquet" -iapplication="SparkExample/csv2parquet/csv2parquet-0.1.jar" -iworkers="3" -iin_files="SparkExample/csv2parquet/samples-patients.csv" -iapp_args="in/in_files/0/samples-patients.csv Patients out/output_files/patients.parquet"  -y
+
+Using input JSON:
+{
+    "class": "com.dnanexus.spark.PhenoCsvToParquet", 
+    "workers": 3, 
+    "app_args": "in/in_files/0/samples-patients.csv Patients out/output_files/patients.parquet", 
+    "application": {
+        "$dnanexus_link": {
+            "project": "project-F75vXVj0gq64f9xx7zQqfKKq", 
+            "id": "file-F7Yv0p80gq67jxq60by8K416"
+        }
+    }, 
+    "in_files": [
+        {
+            "$dnanexus_link": {
+                "project": "project-F75vXVj0gq64f9xx7zQqfKKq", 
+                "id": "file-F7Yj78j0gq662Bv142J5X2q4"
+            }
+        }
+    ]
+}
+```
+Running the above command should generate patients.parquet folder in your application.
 # Note 
-* Currently the application does not take project files as argument. But it should be easy to add. 
 * You can use this app as template to create more complex projects.

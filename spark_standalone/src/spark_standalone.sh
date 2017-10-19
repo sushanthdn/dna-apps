@@ -22,9 +22,6 @@ main() {
     # recover the original filenames, you can use the output of "dx describe
     # "$variable" --name".
 
-    # Download the file as application in the home directory
-    dx download "$application" -o application.jar
-
     # Download all input files
     dx-download-all-inputs --parallel
 
@@ -38,7 +35,7 @@ main() {
     --executor-cores $cores \
     --executor-memory $executor_memory \
     --master $SPARK_MASTER_URL \
-    /home/dnanexus/application.jar $app_args
+    $application_path $app_args
 
     # Fill in your application code here.
     #

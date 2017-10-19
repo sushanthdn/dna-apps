@@ -7,7 +7,7 @@
   "inputSpec": [
     {
       "name": "application",
-      "label": "Spark Application Executable ",
+      "label": "Spark Application Executable",
       "class": "file",
       "optional": false,
       "patterns": [
@@ -45,7 +45,7 @@
       "label": "Number of workers",
       "class": "int",
       "optional": true,
-      "default": 1,
+      "default": 2,
       "choices": [
         1,
         2,
@@ -78,7 +78,14 @@
       "help": ""
     }
   ],
-  "outputSpec": [],
+  "outputSpec": [
+    {
+      "name": "output_files",
+      "label": "Output files",
+      "class": "array:file",
+      "optional": true
+    }
+  ],
   "runSpec": {
     "timeoutPolicy": {
       "*": {
