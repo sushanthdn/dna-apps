@@ -24,6 +24,13 @@
       "help": "(e.g. org.apache.spark.examples.SparkPi)"
     },
     {
+      "name": "jars",
+      "label": "Jars to include in classpath, comma seperated",
+      "class": "string",
+      "optional": true,
+      "help": "(e.g. /home/dnanexus/test1.jar,/app/hadoop/share/test2.jar)"
+    },
+    {
       "name": "in_files",
       "label": "Input files",
       "class": "array:file",
@@ -101,7 +108,7 @@
     },
     "assetDepends": [
       {
-        "id": "record-F7ZY8000vV80v46861GG88vg"
+        "id": "record-F7b27j80Yk4qfJv5GG8xZJ4B"
       }
     ],
     "distribution": "Ubuntu",

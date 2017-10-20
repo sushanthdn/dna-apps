@@ -16,6 +16,7 @@ main() {
     echo "Value of executor_memory: '$executor_memory'"
     echo "Value of class: '$class'"
     echo "Value of in: '$in_files'"
+    echo "Value of jars : '$jars'"
 
     # The following line(s) use the dx command-line tool to download your file
     # inputs to the local file system using variable names for the filenames. To
@@ -28,12 +29,22 @@ main() {
     echo "Starting Apache Spark in Standalone Mode"
     export SPARK_WORKER_INSTANCES=$workers
 
+    JARS=''
+    if [ -z "$jars" ]
+    then
+          JARS=''
+    else
+          JARS="--jars $jars"
+    fi
+
+
     source /apps/resources/spark/spark.environment
     /apps/resources/spark/setup/setup-standalone.sh
 
     $SPARK_HOME/bin/spark-submit --class $class \
     --executor-cores $cores \
     --executor-memory $executor_memory \
+    $JARS \
     --master $SPARK_MASTER_URL \
     $application_path $app_args
 
@@ -52,7 +63,8 @@ main() {
     # will be AppInternalError with a generic error message.
 
     # Copy the log files
-    sudo tar -cvzf out/output_files/$DX_JOB_ID-spark-logs.tar.gz $SPARK_LOG_DIR
+    sudo mkdir -p out/output_files/logs
+    sudo tar -cvzf out/output_files/logs/$DX_JOB_ID-spark-logs.tar.gz $SPARK_LOG_DIR
 
     # Upload outputs
     dx-upload-all-outputs --parallel
