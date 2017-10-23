@@ -12,8 +12,8 @@ sudo cp /apps/resources/hadoop/ssh/config /home/dnanexus/.ssh/
 
 sudo chown dnanexus $HADOOP_LOG_DIR
 
-/apps/hadoop/bin/hdfs namenode -format
-/apps/hadoop/sbin/start-dfs.sh
-/apps/hadoop/sbin/start-yarn.sh
+$HADOOP_HOME/bin/hdfs namenode -format
+$HADOOP_HOME/sbin/start-dfs.sh
+$HADOOP_HOME/sbin/start-yarn.sh
 
 jps
