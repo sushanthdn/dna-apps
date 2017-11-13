@@ -1,0 +1,9 @@
+<configuration>
+    <property>
+        <name>hive.metastore.uris</name>
+        <!--Make sure that <value> points to the Hive Metastore URI in your cluster -->
+        <!--Set metastore in /etc/hosts file -->
+        <value>thrift://ec2-52-91-224-237.compute-1.amazonaws.com:9083</value>
+        <description>URI for client to contact metastore server</description>
+    </property>
+</configuration>

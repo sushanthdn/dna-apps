@@ -17,3 +17,5 @@ source /apps/resources/spark/spark.environment
 sudo mkdir -p $SPARK_LOG_DIR
 # Create spark work folder
 sudo mkdir -p $SPARK_WORK_DIR
+
+sudo cp /apps/resources/spark/custom/hive-site.xml $SPARK_CONF_DIR/
