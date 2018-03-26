@@ -37,9 +37,6 @@
       }
     },
     "assetDepends": [
-      {
-        "id": "record-F850vY003FyGxqBB1FZB8911"
-      }
     ],
     "file": "src/code.py",
     "release": "14.04",

@@ -1,0 +1,35 @@
+{
+  "name": "dx-cluster-app",
+  "title": "Dx Cluster App Test",
+  "summary": "Simple cluster app to test  ",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+  ],
+  "outputSpec": [
+  ],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 2
+      }
+    },
+    "interpreter": "bash",
+    "file": "src/run.sh",
+    "systemRequirements": {
+      "*": {
+        "instanceType": "mem1_ssd1_x4"
+      }
+    },
+    "assetDepends": [
+     ],
+    "distribution": "Ubuntu",
+    "release": "14.04"
+  },
+  "access": {
+    "project": "CONTRIBUTE",
+    "network": [
+      "*"
+    ]
+  }
+}
