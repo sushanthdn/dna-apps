@@ -18,8 +18,16 @@
     "file": "src/run.sh",
     "systemRequirements": {
       "*": {
-        "instanceType": "mem1_ssd1_x4"
+        "instanceType": "mem1_ssd1_x4",
+        "clusterSpec":{
+          "type" : "spark",
+          "version" : "2.2",
+          "initialInstanceCount":2,
+          "bootstrapScript": "src/bootstrap.sh",
+          "ports" : [9000,50070]
       }
+
+    }
     },
     "assetDepends": [
      ],
