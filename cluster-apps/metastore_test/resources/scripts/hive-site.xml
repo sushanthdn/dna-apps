@@ -1,0 +1,52 @@
+<configuration>
+    <!-- Metastore URI -->
+    <property>
+        <name>hive.metastore.uris</name>
+        <value>@@METASTORE_URI@@</value>
+        <description>URI for client to contact metastore server</description>
+    </property>
+
+    <!-- default value 32 MB -->
+    <property>
+        <name>dnanexus.fs.input.stream.buffer.size</name>
+        <value>33554432</value>
+    </property>
+
+    <!-- default value 32 MB -->
+    <property>
+        <name>dnanexus.fs.output.stream.buffer.size</name>
+        <value>33554432</value>
+    </property>
+
+    <!-- default value 16 MB -->
+    <property>
+        <name>dnanexus.fs.output.upload.chunk.size</name>
+        <value>16777216</value>
+    </property>
+
+    <property>
+        <name>dnanexus.fs.cache.filestatus.enabled</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>hive.warehouse.subdir.inherit.perms</name>
+        <value>false</value>
+    </property>
+
+    <property>
+        <name>hive.server2.enable.doAs</name>
+        <value>true</value>
+    </property>
+
+    <property>
+        <name>hive.default.fileformat.managed</name>
+        <value>Parquet</value>
+    </property>
+
+    <property>
+        <name>hive.default.fileformat</name>
+        <value>Parquet</value>
+    </property>
+
+</configuration>
