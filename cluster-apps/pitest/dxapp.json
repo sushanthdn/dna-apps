@@ -1,0 +1,49 @@
+{
+  "name": "pitest",
+  "title": "Pi Cluster App Test",
+  "summary": "Test Cluster Applet to test cluster features",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [
+    {
+      "name": "no_of_samples",
+      "label": "No of Samples",
+      "class": "int",
+      "optional": true,
+      "default": 10,
+      "help": ""
+    }
+  ],
+  "outputSpec": [],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 2
+      }
+    },
+    "interpreter": "bash",
+    "release": "14.04",
+    "distribution": "Ubuntu",
+    "file": "src/pitest.sh"
+  },
+  "access": {
+    "project": "CONTRIBUTE",
+    "network": [
+      "*"
+    ]
+  },
+  "regionalOptions": {
+    "aws:us-east-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_x2",
+          "clusterSpec": {
+            "type": "spark",
+            "version": "2.2.0",
+            "initialInstanceCount": 2
+          }
+        }
+      }
+    }
+  }
+}
