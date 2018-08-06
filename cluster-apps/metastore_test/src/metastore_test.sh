@@ -19,10 +19,10 @@ main() {
 
     echo "Value of query: '$query'"
     echo "Value of uri: '$uri"
-#
-#    sed -i -e 's,@@METASTORE_URI@@,'"$uri"',g' /scripts/hive-site.xml
-#
-#    cp /scripts/hive-site.xml /cluster/spark/conf/
+
+    sed -i -e 's,@@METASTORE_URI@@,'"$uri"',g' /scripts/hive-site.xml
+
+    cp /scripts/hive-site.xml /cluster/spark/conf/
 
     source /cluster/dx-cluster.environment
 

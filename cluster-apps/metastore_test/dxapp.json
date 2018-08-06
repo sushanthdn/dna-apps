@@ -6,19 +6,19 @@
   "version": "0.0.1",
   "inputSpec": [
     {
-      "name": "query",
-      "label": "SQL query",
-      "class": "string",
-      "optional": true,
-      "default": "SHOW DATABASES;",
-      "help": ""
-    },
-    {
       "name": "uri",
       "label": "metastore uri",
       "class": "string",
       "optional": true,
       "default": "http://10.0.3.1:9083",
+      "help": ""
+    },
+    {
+      "name": "query",
+      "label": "SQL query",
+      "class": "string",
+      "optional": true,
+      "default": "SHOW DATABASES;",
       "help": ""
     }
   ],
