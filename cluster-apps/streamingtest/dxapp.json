@@ -1,0 +1,38 @@
+{
+  "name": "streamingtest",
+  "title": "Cluster Streaming Test",
+  "summary": "Test Cluster Applet to test cluster features",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [],
+  "outputSpec": [],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 2
+      }
+    },
+    "interpreter": "bash",
+    "release": "14.04",
+    "distribution": "Ubuntu",
+    "file": "src/streaming.sh"
+  },
+  "access": {
+    "project": "CONTRIBUTE",
+    "network": [ "*"]
+  },
+  "regionalOptions": {
+    "aws:us-east-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_x2",
+          "clusterSpec": {
+            "type": "spark",
+            "version": "2.2.0",
+            "initialInstanceCount": 2
+          }
+        }
+      }
+    }
+  }
+}
