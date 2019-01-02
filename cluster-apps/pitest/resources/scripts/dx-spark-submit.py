@@ -52,27 +52,14 @@ def spark_submit(spark_args, log_level, conf):
     logging.debug("Spark Args = [ {0} ]".format(spark_args))
     logging.debug("Logging Options = [ {0} ]".format(log_options))
 
-    # python dx-spark-submit.py --app-config test.json --spark-args
-    # '--class org.apache.spark.examples.SparkPi /Users/sreddy/dev/spark240/examples/jars/spark-examples_2.11-2.4.0.jar 10'
-    # --log-level DEBUG
-    exitcode = run_command(["./dx-spark-submitter.sh", log_options, conf, spark_args], "[SPARK]")
+    exitcode = run_command(["/scripts/dx-spark-submitter.sh", log_options, conf, spark_args], "[SPARK]")
     return exitcode
 
-
 def collect_logs(log_upload_dir):
-    # if [ $exit_status != 0 ]; then
-    #     echo "WARN - Spark Sql Runner failure ${exit_status} -- collecting logs required for debug"
-    #     destination=/.sql-runner-debugging
-    #     dx mkdir -p $DX_PROJECT_CONTEXT_ID:$destination
-    #     /cluster/log_collector.sh /home/dnanexus/out/cluster_runtime_logs_tarball
-    #     dx upload /home/dnanexus/out/cluster_runtime_logs_tarball/* \
-    #        --destination=$DX_PROJECT_CONTEXT_ID:${destination}/
-    #     exit $exit_status
-    # fi
     folder = ""
     if log_upload_dir is not None:
         folder = log_upload_dir
-    exitcode = run_command(["./collect_log.sh", folder], "[COLLECT_LOGS]")
+    exitcode = run_command(["/scripts/collect_log.sh", folder], "[COLLECT_LOGS]")
     return exitcode
 
 
@@ -85,10 +72,12 @@ def run_command(arguments, log_prefix=None):
 
     exitcode = 0
     try:
+        logging.info("Submitting command ["+str(arguments)+"]")
         process = subprocess.Popen(arguments, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         with process.stdout:
             log_subprocess_output(process.stdout, log_prefix)
         exitcode = process.wait()
+
     except Exception as e:
         exitcode = 1
         logging.error("Failed to run command. " + e.message)
