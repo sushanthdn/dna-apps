@@ -1,0 +1,1 @@
+{"spark-default.conf":[{"name":"spark.reducer.maxSizeInFlight","value":"48m","override_allowed":"False"},{"name":"spark.shuffle.compress","value":"True","override_allowed":"True"}]}

@@ -39,7 +39,7 @@
           "instanceType": "mem1_ssd1_x2",
           "clusterSpec": {
             "type": "spark",
-            "version": "2.2.0",
+            "version": "2.4.0",
             "initialInstanceCount": 2
           }
         }

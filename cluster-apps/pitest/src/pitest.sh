@@ -22,11 +22,18 @@ main() {
     /cluster/hadoop/bin/hdfs dfsadmin -report
     logPropFile=/cluster/dnax/config/log/log4j-INFO.properties
 
-    /cluster/spark/bin/spark-submit \
-    --driver-java-options "-Dlog4j.configuration=file:$logPropFile" \
-    --conf "spark.executor.extraJavaOptions=-Dlog4j.configuration=file:$logPropFile" \
-    --class org.apache.spark.examples.SparkPi \
-    --master spark://master:41000 \
-    --deploy-mode client /cluster/spark/examples/jars/spark-examples*.jar $no_of_samples
+#    /cluster/spark/bin/spark-submit \
+#    --driver-java-options "-Dlog4j.configuration=file:$logPropFile" \
+#    --conf "spark.executor.extraJavaOptions=-Dlog4j.configuration=file:$logPropFile" \
+#    --class org.apache.spark.examples.SparkPi \
+#    --master spark://master:41000 \
+#    --deploy-mode client /cluster/spark/examples/jars/spark-examples*.jar $no_of_samples
+
+    #sleep 50000
+
+    python /scripts/dx-spark-submit.py --log-level INFO --collect-log --app-config /scripts/test.json \
+        --spark-args '--class org.apache.spark.examples.SparkPi /cluster/spark/examples/jars/spark-examples*.jar 10'
+    #python /scripts/dx-spark-submit.py --log-level DEBUG  --collect-log --app-config /scripts/test.json \
+    #    --spark-args '--class org.apache.spark.examples.SparkPi /cluster/spark/examples/jars/spark-examples*.jar 10'
 
 }
