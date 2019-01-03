@@ -22,9 +22,8 @@ system_spark_confs = ["spark.driver.host",
 
 
 def dx_spark_submit(spark_args, log_level, log_collect, log_upload_dir, app_config, user_config):
-    validator = SparkConfigValidator(app_config, user_config)
     try:
-        resolved_configs = validator.validate()
+        resolved_configs = resolve_config(app_config, user_config)
         job_status = spark_submit(spark_args=spark_args, log_level=log_level, conf=resolved_configs)
         logging.info("Spark submit exit status " + str(job_status))
         if log_collect:
@@ -55,6 +54,7 @@ def spark_submit(spark_args, log_level, conf):
     exitcode = run_command(["/scripts/dx-spark-submitter.sh", log_options, conf, spark_args], "[SPARK]")
     return exitcode
 
+
 def collect_logs(log_upload_dir):
     folder = ""
     if log_upload_dir is not None:
@@ -72,7 +72,7 @@ def run_command(arguments, log_prefix=None):
 
     exitcode = 0
     try:
-        logging.info("Submitting command ["+str(arguments)+"]")
+        logging.info("Submitting command [" + str(arguments) + "]")
         process = subprocess.Popen(arguments, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
         with process.stdout:
             log_subprocess_output(process.stdout, log_prefix)
@@ -85,41 +85,88 @@ def run_command(arguments, log_prefix=None):
     return exitcode
 
 
-# SparkConfigValidator validates the app developer or user configurations and resolves according the order or
-# precedence. It also makes sure that the app or user is not overriding something that is restricted by the platform
-class SparkConfigValidator:
-    def __init__(self, app_config, user_config):
-        self.app_config_json = app_config
-        self.user_config_json = user_config
+def resolve_config(app_config_file=None, user_config_file=None):
+    spark_config_util = SparkConfigUtil()
+    app_config_dict, user_config_dict = None, None
+    if app_config_file is not None:
+        app_config_dict = spark_config_util.get_config_dict(app_config_file)
+    if user_config_file is not None:
+        user_config_dict = spark_config_util.get_config_dict(user_config_file)
+    return spark_config_util.generate_conf_options(app_config_dict, user_config_dict)
 
-    def validate(self):
-        if self.app_config_json is not None:
-            app_config = self.get_json(self.app_config_json)
-            self.validate_app_config(app_config)
 
-            return self.generate_conf_options(app_config)
-        return None
+class SparkConfigUtil:
+    def __init__(self):
+        pass
+
+    def get_config_dict(self, config_file):
+        config_dict = self.json_file_to_dict(config_file)
+        self.check_system_override(config_dict)
+        logging.debug("Config_dict: " + str(config_dict))
+        return config_dict
 
     @staticmethod
-    def generate_conf_options(config_dict):
-        spark_defaults = config_dict["spark-default.conf"]
+    def generate_conf_options(app_config_dict=None, user_config_dict=None):
+
+        spark_default_key = "spark-default.conf"
+        app_spark_conf, user_spark_conf = None, None
+        if app_config_dict is not None and spark_default_key in app_config_dict:
+            app_spark_conf = app_config_dict[spark_default_key]
+
+        if user_config_dict is not None and spark_default_key in user_config_dict:
+            user_spark_conf = user_config_dict[spark_default_key]
+
+        resolved_configs = []
+        if app_spark_conf is not None:
+            if user_spark_conf is not None:
+                for app_config in app_spark_conf:
+                    updated = False
+                    for user_config in user_spark_conf:
+                        if app_config["name"] == user_config["name"]:
+                            override_allowed = "override_allowed"
+                            if override_allowed not in app_config or app_config[override_allowed]:
+                                resolved_configs.append(user_config)
+                                updated = True
+                            else:
+                                raise SparkConfigValidatorException(
+                                    "App config {" + app_config["name"] + "} cannot be overridden")
+                    if not updated:
+                        # append to the final list
+                        logging.debug("APPENDING")
+                        resolved_configs.append(app_config)
+            else:
+                resolved_configs = app_spark_conf
+        else:
+            if user_spark_conf is not None:
+                resolved_configs = user_spark_conf
+
+        logging.debug("Resolved Configs Size=" + str(len(resolved_configs)) + ", Content => " + str(resolved_configs))
+
+        user_only_config = []
+        # For configs only present in user_conf add them to final list
+        if user_spark_conf is not None:
+            for user_config in user_spark_conf:
+                found = False
+                for rconfig in resolved_configs:
+                    if user_config["name"] == rconfig["name"]:
+                        found = True
+                        break
+                if not found:
+                    user_only_config.append(user_config)
+
+        logging.debug("UserOnly Configs Size=" + str(len(user_only_config)) + ", Content => " + str(user_only_config))
+        final_config = user_only_config + resolved_configs
+        logging.debug("Merged Configs Size=" + str(len(final_config)) + ", Content => " + str(final_config))
+
         options = ""
-        for spark_conf in spark_defaults:
-            conf_options = " --conf {0}={1}".format(spark_conf["name"], spark_conf["value"])
-            options = options + conf_options
+        if user_only_config is not None:
+            for spark_conf in final_config:
+                conf_options = " --conf {0}={1}".format(spark_conf["name"], spark_conf["value"])
+                options = options + conf_options
         return options
 
     @staticmethod
-    def validate_app_config(app_config):
-        for key in app_config.keys():
-            if key not in conf_files_supported:
-                raise SparkConfigValidatorException("Updating config file " + key + " is not allowed")
-            for property in app_config[key]:
-                if property["name"] in system_spark_confs:
-                    raise SparkConfigValidatorException("Cannot override system config "+property["name"])
-
-    @staticmethod
-    def get_json(data):
+    def json_file_to_dict(data):
         if os.path.isfile(data):
             logging.info("Input " + data[0:20] + " is a file, getting contents from file")
             with open(data) as f:
@@ -132,6 +179,15 @@ class SparkConfigValidator:
             raise SparkConfigValidatorException(
                 "Input \'" + data + "\' is invalid, should either be a json string or a "
                                     "file containing json")
+
+    @staticmethod
+    def check_system_override(config):
+        for key in config.keys():
+            if key not in conf_files_supported:
+                raise SparkConfigValidatorException("Updating config file " + key + " is not allowed")
+            for property in config[key]:
+                if property["name"] in system_spark_confs and key == "spark-default.conf":
+                    raise SparkConfigValidatorException("Cannot override system config " + property["name"])
 
 
 class DxSparkSubmitException(Exception):
