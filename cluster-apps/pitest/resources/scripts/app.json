@@ -1,0 +1,2 @@
+{"spark-default.conf":[{"name":"spark.driver.host","value":"localhost"},{"name":"spark.hadoop.abc.def","value":"xyz"},{"name":"spark.with.spaces","value":"\"with spaces\""},{"name":"spark.reducer.maxSizeInFlight","value":"48m","override_allowed":false},{"name":"spark.shuffle.compress","value":true,"override_allowed":true}]}
+

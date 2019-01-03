@@ -89,14 +89,15 @@ def run_command(arguments, log_prefix=None):
 # precedence. It also makes sure that the app or user is not overriding something that is restricted by the platform
 class SparkConfigValidator:
     def __init__(self, app_config, user_config):
-        self.app_config = app_config
-        self.user_config = user_config
+        self.app_config_json = app_config
+        self.user_config_json = user_config
 
     def validate(self):
-        if self.app_config is not None:
-            appconf = self.get_json(self.app_config)
-            self.validate_config_file(appconf)
-            return self.generate_conf_options(appconf)
+        if self.app_config_json is not None:
+            app_config = self.get_json(self.app_config_json)
+            self.validate_app_config(app_config)
+
+            return self.generate_conf_options(app_config)
         return None
 
     @staticmethod
@@ -104,15 +105,18 @@ class SparkConfigValidator:
         spark_defaults = config_dict["spark-default.conf"]
         options = ""
         for spark_conf in spark_defaults:
-            conf_options = " --conf \"{0}={1}\"".format(spark_conf["name"], spark_conf["value"])
+            conf_options = " --conf {0}={1}".format(spark_conf["name"], spark_conf["value"])
             options = options + conf_options
         return options
 
     @staticmethod
-    def validate_config_file(config_dict):
-        for key in config_dict.keys():
+    def validate_app_config(app_config):
+        for key in app_config.keys():
             if key not in conf_files_supported:
                 raise SparkConfigValidatorException("Updating config file " + key + " is not allowed")
+            for property in app_config[key]:
+                if property["name"] in system_spark_confs:
+                    raise SparkConfigValidatorException("Cannot override system config "+property["name"])
 
     @staticmethod
     def get_json(data):
@@ -128,10 +132,6 @@ class SparkConfigValidator:
             raise SparkConfigValidatorException(
                 "Input \'" + data + "\' is invalid, should either be a json string or a "
                                     "file containing json")
-
-    @staticmethod
-    def check_supported_conf_files(conf_dict):
-        print "Check for config files"
 
 
 class DxSparkSubmitException(Exception):

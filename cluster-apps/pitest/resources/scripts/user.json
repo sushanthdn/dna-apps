@@ -1,0 +1,2 @@
+{"spark-default.conf":[{"name":"spark.app.override","value":"abc"},{"name":"spark.hadoop.abc.def","value":"xyz"},{"name":"spark.with.spaces","value":"\"with spaces\""},{"name":"spark.reducer.maxSizeInFlight","value":"48m"},{"name":"spark.shuffle.compress","value":true}]}
+
