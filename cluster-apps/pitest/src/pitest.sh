@@ -13,7 +13,7 @@ main() {
     python /cluster/dnax/bin/dx-spark-submit.py \
         --log-level INFO \
         --collect-log \
-        ----log-collect-dir pitestlogs \
+        --log-collect-dir pitestlogs \
         --app-config /scripts/app.json \
         --user-config /scripts/user.json \
         --spark-args "--class org.apache.spark.examples.SparkPi /cluster/spark/examples/jars/spark-examples*.jar $no_of_samples"
