@@ -44,14 +44,18 @@ def spark_submit(spark_args, log_level, conf):
 
     if log_level is not None:
         log_conf = "/cluster/dnax/config/log/log4j-" + log_level + ".properties"
-        log_options = "--driver-java-options -Dlog4j.configuration=file:" + log_conf \
-                      + " --conf spark.executor.extraJavaOptions=-Dlog4j.configuration=file:" + log_conf
+        driver_log_opts = "--driver-java-options -Dlog4j.configuration=file:" + log_conf
+        executor_log_opts = " --conf spark.executor.extraJavaOptions=-Dlog4j.configuration=file:" + log_conf
+        # log_options = "--driver-java-options -Dlog4j.configuration=file:" + log_conf \
+        #               + " --conf spark.executor.extraJavaOptions=-Dlog4j.configuration=file:" + log_conf
 
-    logging.debug("Config Options = [ {0} ]".format(conf))
-    logging.debug("Spark Args = [ {0} ]".format(spark_args))
-    logging.debug("Logging Options = [ {0} ]".format(log_options))
+    logging.debug("Config Options  = [ {0} ]".format(conf))
+    logging.debug("Spark Args      = [ {0} ]".format(spark_args))
+    logging.debug("Driver Logging Options = [ {0} ]".format(driver_log_opts))
+    logging.debug("Executor Logging Options = [ {0} ]".format(executor_log_opts))
 
-    exitcode = run_command(["/scripts/dx-spark-submitter.sh", log_options, conf, spark_args], "[SPARK]")
+    exitcode = run_command(["/scripts/dx-spark-submitter.sh", driver_log_opts, executor_log_opts, conf, spark_args],
+                           "[SPARK]")
     return exitcode
 
 
@@ -90,8 +94,10 @@ def resolve_config(app_config_file=None, user_config_file=None):
     app_config_dict, user_config_dict = None, None
     if app_config_file is not None:
         app_config_dict = spark_config_util.get_config_dict(app_config_file)
+        logging.debug("Application Configuration : " + str(app_config_dict))
     if user_config_file is not None:
         user_config_dict = spark_config_util.get_config_dict(user_config_file)
+        logging.debug("User Configuration : " + str(user_config_dict))
     return spark_config_util.generate_conf_options(app_config_dict, user_config_dict)
 
 
@@ -102,7 +108,6 @@ class SparkConfigUtil:
     def get_config_dict(self, config_file):
         config_dict = self.json_file_to_dict(config_file)
         self.check_system_override(config_dict)
-        logging.debug("Config_dict: " + str(config_dict))
         return config_dict
 
     @staticmethod
@@ -132,7 +137,6 @@ class SparkConfigUtil:
                                     "App config {" + app_config["name"] + "} cannot be overridden")
                     if not updated:
                         # append to the final list
-                        logging.debug("APPENDING")
                         resolved_configs.append(app_config)
             else:
                 resolved_configs = app_spark_conf
@@ -161,7 +165,17 @@ class SparkConfigUtil:
         options = ""
         if user_only_config is not None:
             for spark_conf in final_config:
-                conf_options = " --conf {0}={1}".format(spark_conf["name"], spark_conf["value"])
+                value = spark_conf["value"]
+                # if its of type string and has spaces in it, need to add inside quotes
+                if isinstance(value, basestring) and ' ' in value:
+                    # TODO values with spaces is unsupported. Have some issue with quotes when its passes to bash.
+                    # will be supported later.
+                    raise SparkConfigValidatorException(
+                        "Configuration {0} should not contain values with spaces  \"{1}\". Unsupported".format(
+                            spark_conf["name"], value))
+                    # conf_options = " --conf {0}=\"{1}\"".format(spark_conf["name"], value)
+                else:
+                    conf_options = " --conf {0}={1}".format(spark_conf["name"], value)
                 options = options + conf_options
         return options
 
