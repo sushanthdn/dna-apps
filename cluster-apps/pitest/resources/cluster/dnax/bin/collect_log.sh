@@ -2,11 +2,9 @@
 
 set -e -o
 
-. /etc/profile.d/dnanexus.environment.sh
-. /cluster/dx-cluster.environment
-. /home/dnanexus/environment
-
-DX_PROJECT_CONTEXT_ID=project-FFb0Jjj0xppgyk0VBYB7BfZ8
+source /etc/profile.d/dnanexus.environment.sh
+source /cluster/dx-cluster.environment
+source /home/dnanexus/environment
 
 DEST="/"
 if [ "$#" -lt 1 ]; then

@@ -20,6 +20,7 @@ system_spark_confs = ["spark.driver.host",
                       "spark.jars",
                       "spark.hadoop.mapreduce.fileoutputcommitter.algorithm.version"]
 
+script_path = "/cluster/dnax/bin/"
 
 def dx_spark_submit(spark_args, log_level, log_collect, log_upload_dir, app_config, user_config):
     try:
@@ -54,7 +55,7 @@ def spark_submit(spark_args, log_level, conf):
     logging.debug("Driver Logging Options = [ {0} ]".format(driver_log_opts))
     logging.debug("Executor Logging Options = [ {0} ]".format(executor_log_opts))
 
-    exitcode = run_command(["/scripts/dx-spark-submitter.sh", driver_log_opts, executor_log_opts, conf, spark_args],
+    exitcode = run_command([script_path+"dx-spark-submitter.sh", driver_log_opts, executor_log_opts, conf, spark_args],
                            "[SPARK]")
     return exitcode
 
@@ -63,7 +64,7 @@ def collect_logs(log_upload_dir):
     folder = ""
     if log_upload_dir is not None:
         folder = log_upload_dir
-    exitcode = run_command(["/scripts/collect_log.sh", folder], "[COLLECT_LOGS]")
+    exitcode = run_command([script_path+"collect_log.sh", folder], "[COLLECT_LOGS]")
     return exitcode
 
 
