@@ -17,7 +17,7 @@ fi
 
 
 echo  "Initiating log collection"
-/cluster/log_collector.sh /home/dnanexus/out/cluster_runtime_logs_tarball
+/cluster/log_collector.sh /home/dnanexus/logs/cluster_runtime_logs_tarball
 echo  "Upload collected log to $DX_PROJECT_CONTEXT_ID:$DEST"
-dx upload /home/dnanexus/out/cluster_runtime_logs_tarball/* --destination=$DX_PROJECT_CONTEXT_ID:$DEST
+dx upload /home/dnanexus/logs/cluster_runtime_logs_tarball/* --destination=$DX_PROJECT_CONTEXT_ID:$DEST
 echo  "Done."
