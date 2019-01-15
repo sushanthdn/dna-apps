@@ -1,1 +1,1 @@
-{"spark-default.conf":[{"name":"spark.only.user","value":"abc"},{"name":"spark.hadoop.abc.def","value":"overridden"},{"name":"spark.test.memory","value":"48m"},{"name":"spark.shuffle.compress","value":false}]}
+{"spark-defaults.conf":[{"name":"spark.only.user","value":"abc"}]}
