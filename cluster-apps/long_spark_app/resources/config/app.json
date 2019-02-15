@@ -1,0 +1,15 @@
+{
+  "spark-defaults.conf": [
+    {
+      "name": "spark.app.name",
+      "value": "LongRunningApp",
+      "override_allowed": true
+    },
+    {
+      "name": "spark.ui.port",
+      "value": 8081,
+      "override_allowed": false
+    }
+  ]
+}
+

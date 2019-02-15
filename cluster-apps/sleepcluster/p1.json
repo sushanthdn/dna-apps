@@ -1,0 +1,21 @@
+{
+  "substitutions" : {
+    "srcdb": "sskrdemosrcdb1_13",
+    "dstdb": "sskrdemodstdb1_13",
+    "patient": "patient_new",
+    "f2c":"patient_f2c",
+    "derived":"patient_derived",
+    "composed":"patient_composed",
+    "complex":"patient_complex",
+    "patient_view": "patient_newview",
+    "brca": "brca_new",
+    "patient_table":"patient",
+    "cna": "cna_new"
+  },
+
+  "export":{
+    "maxparts" : 2,
+    "fileprefix":"test",
+    "header": true
+  }
+}

@@ -1,1 +1,14 @@
-{"spark-defaults.conf":[{"name":"spark.app.only","value":"apponly","override_allowed":false}]}
+{
+  "spark-defaults.conf": [
+    {
+      "name": "spark.app.only",
+      "value": "apponly",
+      "override_allowed": false
+    },
+    {
+      "name": "spark.executor.extraClassPath1",
+      "value": "/cluster/dnax/jars/dnax-common-1.0.jar:/cluster/dnax/jars/dnanexus-api-0.1.0-SNAPSHOT-jar-with-dependencies.jar:/cluster/dnax/jars/dnaxspark-1.0.jar",
+      "override_allowed": false
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "name": "sleepapp",
+  "title": "Sleep Regular App",
+  "summary": "sleepapp",
+  "dxapi": "1.0.0",
+  "version": "0.0.1",
+  "inputSpec": [],
+  "outputSpec": [],
+  "runSpec": {
+    "timeoutPolicy": {
+      "*": {
+        "hours": 48
+      }
+    },
+    "interpreter": "bash",
+    "release": "14.04",
+    "distribution": "Ubuntu",
+    "file": "src/sleepapp.sh"
+  },
+  "regionalOptions": {
+    "aws:us-east-1": {
+      "systemRequirements": {
+        "*": {
+          "instanceType": "mem1_ssd1_x4"
+        }
+      }
+    }
+  }
+}

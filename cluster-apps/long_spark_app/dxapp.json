@@ -1,28 +1,24 @@
 {
-  "name": "sleepcluster",
-  "title": "Cluster App That Sleeps",
-  "summary": "Test Cluster Applet to test cluster features",
+  "name": "long_spark_app",
+  "title": "Long Running Spark App ",
+  "summary": "long_spark_app",
   "dxapi": "1.0.0",
   "version": "0.0.1",
+  "httpsApp": {"ports":[8081]},
   "inputSpec": [],
   "outputSpec": [],
   "runSpec": {
     "timeoutPolicy": {
       "*": {
-        "hours": 2
+        "hours": 48
       }
     },
     "interpreter": "bash",
     "release": "14.04",
     "distribution": "Ubuntu",
-    "file": "src/sleep.sh"
+    "file": "src/long_spark_app.sh"
   },
-  "access": {
-    "project": "CONTRIBUTE",
-    "network": [
-      "*"
-    ]
-  },
+
   "regionalOptions": {
     "aws:us-east-1": {
       "systemRequirements": {

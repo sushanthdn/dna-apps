@@ -1,0 +1,14 @@
+{
+  "Comment": "UKBB Browser subdomain",
+  "Changes": [
+    {
+      "Action": "UPSERT",
+      "ResourceRecordSet": {
+        "Name": "@@HTTPS_APP_URL@@",
+        "Type": "A",
+        "TTL": 60,
+        "ResourceRecords": [{"Value": "@@WORKER_PUBLIC_IP@@"}]
+      }
+    }
+  ]
+}
