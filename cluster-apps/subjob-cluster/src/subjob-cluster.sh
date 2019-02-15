@@ -14,6 +14,6 @@ pitest()
 main()
 {
 
-    job = dx-jobutil-new-job pitest
+    dx-jobutil-new-job pitest
     echo " MAIN JOB DONE "
 }
